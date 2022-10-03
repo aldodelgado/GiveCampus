@@ -1,0 +1,15 @@
+= simple_form_for campaign do |f|
+  .row
+    .col
+      = f.input :name
+    .col
+      = f.input :goal_amount, as: :decimal, input_html: { step: 0.01 }
+  .row
+    .col
+      = f.input :start_date, html5: true
+    .col
+      = f.input :end_date, html5: true
+
+  .row
+    .col
+      = f.button :submit, class: 'btn btn-success'

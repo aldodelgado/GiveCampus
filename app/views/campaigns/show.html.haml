@@ -1,0 +1,62 @@
+.container
+  .row.mt-5
+    .col
+      .h3 Campaign
+  .row
+    .col
+      .fw-bold
+        Name:
+      = campaign.name
+    .col
+      .fw-bold
+        Total Donations:
+      = number_to_currency(campaign.total_donations, precision: 2)
+    .col
+      .fw-bold
+        Goal Amount:
+      = number_to_currency(campaign.goal_amount, precision: 2)
+    .col
+      .fw-bold
+        Start Date:
+      = campaign.start_date.strftime("%B %d, %Y")
+    .col
+      .fw-bold
+        End Date:
+      = campaign.end_date.strftime("%B %d, %Y")
+
+  .row.mt-5
+    .col
+      = link_to new_campaign_donation_path(campaign), class: 'pull-left btn btn-success', 'data-bs-toggle' => 'tooltip', 'data-bs-placement' => 'top', title: 'Donate Campaign' do
+        = fa_icon 'hand-holding-usd'
+      .h3 Donations
+  .row
+    .col
+      %table.table
+        %thead
+          %tr
+            %th #
+            %th Donor Name
+            %th Donation Type
+            %th Amount
+            %th Match Amount
+            %th Max Match Amount
+            %th Created At
+            %th Donation Amount
+        %tbody
+          - campaign.donations.each do |donation|
+            %tr
+              %td= donation.id
+              %td= donation.donor.name
+              %td= donation.kind.titleize
+              %td= number_to_currency(donation.amount, precision: 2)
+              %td
+                - if donation.donor_match?
+                  = donation.match_amount.round
+                - elsif donation.dollar_match?
+                  = number_to_currency(donation.match_amount, precision: 2)
+              %td= number_to_currency(donation.match_max_amount, precision: 2)
+              %td= donation.created_at
+              %td= number_to_currency(donation.donation_amount, precision: 2)
+        %tfoot
+          %tr
+            %td{colspan: "8"}

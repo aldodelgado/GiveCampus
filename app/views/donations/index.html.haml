@@ -1,0 +1,18 @@
+%table.table
+  %thead
+    %tr
+      %th #
+      %th Name
+      %th Kind
+      %th Match
+      %th End Date
+      %th Actions
+  %tbody
+    - campaign.donations.each do |donation|
+      %tr
+        %td= donation.id
+        %td= donation.donor.name
+        %td= donation.kind
+        %td= donation.match_amount
+        %td= donation.match_max_amount
+        %td= donation.created_at

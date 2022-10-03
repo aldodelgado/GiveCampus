@@ -1,0 +1,22 @@
+!!!
+%html{lang: "en"}
+  %head
+    %meta{charset: "utf-8"}
+    %meta{content: "width=device-width, initial-scale=1", name: "viewport"}
+    %meta{content: "Aldo Delgado", name: "author"}
+    %title Give Campus
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    %link{:crossorigin => "anonymous", :href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css", :integrity => "sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==", :referrerpolicy => "no-referrer", :rel => "stylesheet"}/
+    %script{:crossorigin => "anonymous", :integrity => "sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=", :src => "https://code.jquery.com/jquery-3.6.1.min.js"}
+  %body
+    .col-lg-8.mx-auto.p-3.py-md-5
+      %header.d-flex.align-items-center.pb-3.mb-5.border-bottom
+        = link_to root_path do
+          %span.fs-4 Give Campus
+      %main
+        = yield
+      %footer.pt-5.my-5.text-muted.border-top
+        Created by Aldo Delgado · 2022

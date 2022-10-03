@@ -1,0 +1,34 @@
+.btn-group.pull-right{role: 'group'}
+  = link_to new_campaign_path, class: 'btn btn-success' do
+    Crete New Campaign
+
+%table.table
+  %thead
+    %tr
+      %th #
+      %th Name
+      %th Donated Amount
+      %th Goal Amount
+      %th Start Date
+      %th End Date
+      %th Actions
+  %tbody
+    - campaigns. each do |campaign|
+      %tr
+        %td= campaign.id
+        %td
+          = link_to campaign_path(campaign) do
+            = campaign.name
+        %td= number_to_currency(campaign.total_donations, precision: 2)
+        %td= number_to_currency(campaign.goal_amount, precision: 2)
+        %td= campaign.start_date.strftime("%B %d, %Y")
+        %td= campaign.end_date.strftime("%B %d, %Y")
+        %td
+          .btn-group{ "aria-label" => "campaign actions", role: "group" }
+            = link_to new_campaign_donation_path(campaign), class: 'btn btn-success', 'data-bs-toggle' => 'tooltip', 'data-bs-placement' => 'top', title: 'Donate Campaign' do
+              = fa_icon 'hand-holding-usd'
+            = link_to edit_campaign_path(campaign), class: 'btn btn-primary', 'data-bs-toggle' => 'tooltip', 'data-bs-placement' => 'top', title: 'Edit Campaign' do
+              = fa_icon 'edit'
+            = link_to edit_campaign_path(campaign), class: 'btn btn-danger', 'data-bs-toggle' => 'tooltip', 'data-bs-placement' => 'top', title: 'Delete Campaign'do
+              = fa_icon 'trash'
+

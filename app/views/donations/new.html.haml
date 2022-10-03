@@ -1,0 +1,50 @@
+.container
+  .row.mt-5
+    .col
+      .h3 Campaign
+  .row
+    .col
+      = campaign.name
+    .col
+      = number_to_currency(campaign.goal_amount, precision: 2)
+    .col
+      = campaign.start_date
+      = campaign.end_date
+
+  .row.mt-2
+    .col
+      = simple_form_for [campaign, donation] do |f|
+        = f.simple_fields_for :donor, donation.donor || donation.build_donor do |donor_form|
+          = donor_form.input :first_name
+          = donor_form.input :last_name
+          = donor_form.input :email
+
+        .row
+          .col
+            = f.input :amount, as: :decimal, input_html: { step: 0.01 }
+        .row
+          .col
+            = f.input :kind, collection: enum_for_collection(Donation, :kind), include_blank: false, selected: '', label: 'Choose Donation Type'
+        .row#match_amount{style: 'display: none;'}
+          .col
+            = f.input :match_amount, as: :decimal, input_html: { step: 0.01 }
+        .row#match_max_amount{style: 'display: none;'}
+          .col
+            = f.input :match_max_amount, as: :decimal, input_html: { step: 0.01 }
+
+        .row.mt-2
+          .col
+            = f.button :submit, class: 'btn btn-success'
+
+      :javascript
+        $( document ).ready(function() {
+          $("#donation_kind").change(function() {
+            if ($(this).val() == "single") {
+              $('#match_amount').hide();
+              $('#match_max_amount').hide();
+            } else {
+              $('#match_amount').show();
+              $('#match_max_amount').show();
+            }
+          });
+        });
